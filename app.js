@@ -70,7 +70,7 @@ const trackEvent = async (eventName, eventData) => {
   try {
     console.log(`Mempersiapkan pengiriman event '${eventName}'...`);
     
-    // Mengumpulkan semua data yang relevan
+    // ✅ PERUBAHAN: Mengumpulkan semua data klien dan sesi
     const clientInfo = getClientInfo();
 
     const payload = {
@@ -129,7 +129,7 @@ if (leadForm) {
 
     try {
       const response = await fetch(
-        "https://shoper-api-endpoint-vercel.vercel.app/api/collect-lead",
+        "https://oper-api-endpoint-vercel.vercel.app/api/collect-lead",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -141,7 +141,6 @@ if (leadForm) {
       setFormStatus(false);
 
       if (response.ok && result.success) {
-        // ✅ Panggil event 'Lead' dengan payload yang diperkaya
         await trackEvent('Lead', payload);
         showModal();
         leadForm.reset();
@@ -177,7 +176,6 @@ if (installBtn && closeModalBtn) {
 
 // --- EVENT TRACKING UNTUK PAGEVIEW ---
 window.addEventListener('load', () => {
-  // ✅ Panggil event 'PageView' saat halaman dimuat
   trackEvent('PageView', {
       page_title: document.title,
       page_location: window.location.href,
@@ -198,7 +196,6 @@ const handleScroll = () => {
   const scrollPercentage = (scrollPosition / totalHeight) * 100;
   
   if (scrollPercentage >= 80) {
-    // ✅ Panggil event 'ViewContent' dengan payload
     trackEvent('ViewContent', {
       page_title: document.title,
       page_location: window.location.href,
@@ -208,6 +205,7 @@ const handleScroll = () => {
   }
 };
 window.addEventListener('scroll', handleScroll);
+
 
 
 
