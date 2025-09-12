@@ -101,6 +101,7 @@ const loadingMsg = document.getElementById("loadingMsg");
 const errorMsg = document.getElementById("formErrorMsg");
 const modalOverlay = document.getElementById("successModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
+const installBtn = document.querySelector(".install-button");
 
 // Fungsi untuk mengelola status UI formulir
 function setFormStatus(isLoading, errorMessage = null) {
@@ -179,6 +180,7 @@ if (installBtn && closeModalBtn) {
     setTimeout(() => closeModalBtn.classList.add("visible"), 500);
   });
 }
+
 
 
 
