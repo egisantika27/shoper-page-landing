@@ -1,109 +1,68 @@
-// --- DARK MODE TOGGLE ---
-const darkModeToggle = document.getElementById("dark-mode-toggle");
-if (darkModeToggle) {
-  darkModeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    localStorage.setItem(
-      "darkMode",
-      document.body.classList.contains("dark-mode") ? "enabled" : "disabled"
-    );
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("leadForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const loadingMsg = document.getElementById("loadingMsg");
+  const formErrorMsg = document.getElementById("formErrorMsg");
+
+  const modal = document.getElementById("successModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+
+  // --- Tutup modal ---
+  closeModalBtn.addEventListener("click", () => {
+    modal.classList.remove("show");
+    closeModalBtn.classList.remove("visible");
   });
 
-  if (localStorage.getItem("darkMode") === "enabled") {
-    document.body.classList.add("dark-mode");
-  }
-}
+  // --- Dark mode toggle ---
+  const darkToggle = document.getElementById("dark-mode-toggle");
+  darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+  });
 
-// --- FADE-IN ON SCROLL ---
-const fadeElems = document.querySelectorAll(".fade-in-element");
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add("is-visible");
-    });
-  },
-  { threshold: 0.2 }
-);
-fadeElems.forEach((el) => observer.observe(el));
-
-// --- FORM HANDLING ---
-const leadForm = document.getElementById("leadForm");
-const loadingMsg = document.getElementById("loadingMsg");
-const errorMsg = document.getElementById("formErrorMsg");
-const modalOverlay = document.getElementById("successModal");
-const closeModalBtn = document.getElementById("closeModalBtn");
-
-if (leadForm) {
-  leadForm.addEventListener("submit", async (e) => {
+  // --- Form submit ---
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // reset messages
-    if (loadingMsg) loadingMsg.style.display = "block";
-    if (errorMsg) errorMsg.style.display = "none";
+    formErrorMsg.style.display = "none";
+    loadingMsg.style.display = "block";
 
-    const formData = new FormData(leadForm);
-    const payload = {
-      nama: formData.get("nama"),
-      email: formData.get("email"),
-      phone: formData.get("wa"), // mapping WhatsApp ke phone
+    const formData = {
+      nama: document.getElementById("nama").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("wa").value.trim(),
       source_page: window.location.href,
-      user_agent: navigator.userAgent,
+      user_agent: navigator.userAgent
     };
 
     try {
-      const response = await fetch(
-        "https://shoper-api-endpoint-vercel.vercel.app/api/leads",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch("https://shoper-api-endpoint-vercel.vercel.app/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
 
-      const result = await response.json();
-      if (loadingMsg) loadingMsg.style.display = "none";
+      const result = await res.json();
 
-      if (response.ok && result.success) {
-        showModal();
-        leadForm.reset();
-      } else {
-        if (errorMsg) {
-          errorMsg.textContent = result.error || "Terjadi kesalahan server";
-          errorMsg.style.display = "block";
-        }
-        console.error("Server error:", result.error || "Unknown error");
+      loadingMsg.style.display = "none";
+
+      if (!res.ok) {
+        formErrorMsg.textContent = result.error || "Terjadi kesalahan";
+        formErrorMsg.style.display = "block";
+        return;
       }
+
+      // Reset form
+      form.reset();
+
+      // Tampilkan modal sukses
+      modal.classList.add("show");
+      closeModalBtn.classList.add("visible");
+
     } catch (err) {
-      if (loadingMsg) loadingMsg.style.display = "none";
-      if (errorMsg) {
-        errorMsg.textContent = "Gagal mengirim data. Silakan coba lagi.";
-        errorMsg.style.display = "block";
-      }
       console.error("Request error:", err);
+      loadingMsg.style.display = "none";
+      formErrorMsg.textContent = "Gagal mengirim data. Silakan coba lagi.";
+      formErrorMsg.style.display = "block";
     }
   });
-}
-
-// --- MODAL HANDLING ---
-function showModal() {
-  if (!modalOverlay) return;
-  modalOverlay.classList.add("show");
-  if (closeModalBtn) {
-    setTimeout(() => closeModalBtn.classList.add("visible"), 500);
-  }
-}
-
-function closeModal() {
-  if (!modalOverlay) return;
-  modalOverlay.classList.remove("show");
-  if (closeModalBtn) closeModalBtn.classList.remove("visible");
-}
-
-if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-
-// Klik di luar modal untuk menutup
-if (modalOverlay) {
-  modalOverlay.addEventListener("click", (e) => {
-    if (e.target === modalOverlay) closeModal();
-  });
-}
+});
