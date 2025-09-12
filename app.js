@@ -78,7 +78,7 @@ const trackEvent = async (eventName, eventData) => {
     };
 
     // Langkah 4: Mengirim payload ke endpoint events-log
-    const response = await fetch('https://shoper-api-endpoint-vercel.vercel.app/functions/v1/events-log', {
+    const response = await fetch('https://psstmdfdoantnlmicvcp.supabase.co/functions/v1/events-log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -179,6 +179,7 @@ if (installBtn && closeModalBtn) {
     setTimeout(() => closeModalBtn.classList.add("visible"), 500);
   });
 }
+
 
 
 
