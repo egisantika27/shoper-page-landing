@@ -45,7 +45,7 @@ if (leadForm) {
     const payload = {
       nama: formData.get("nama"),
       email: formData.get("email"),
-      phone: formData.get("wa"), // mapping WhatsApp ke phone
+      phone: formData.get("phone"),
       source_page: window.location.href,
       user_agent: navigator.userAgent,
     };
@@ -107,4 +107,5 @@ if (modalOverlay) {
     if (e.target === modalOverlay) closeModal();
   });
 }
+
 
