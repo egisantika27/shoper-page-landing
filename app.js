@@ -35,16 +35,6 @@ const getCookie = (name) => {
   return null;
 };
 
-// Mengambil ID pengunjung unik dari localStorage
-const getVisitorId = () => {
-  let visitorId = localStorage.getItem('visitorId');
-  if (!visitorId) {
-    visitorId = crypto.randomUUID();
-    localStorage.setItem('visitorId', visitorId);
-  }
-  return visitorId;
-};
-
 // Mengambil parameter iklan dari URL
 const getQueryParams = () => {
   const params = new URLSearchParams(window.location.search);
@@ -54,22 +44,34 @@ const getQueryParams = () => {
   };
 };
 
+// ✅ FUNGSI BARU: Mengumpulkan semua info klien dan sesi
+const getClientInfo = () => {
+  let sessionId = localStorage.getItem('sessionId');
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem('sessionId', sessionId);
+  }
+
+  return {
+    sessionId: sessionId,
+    url: window.location.href,
+    referrer: document.referrer,
+    userAgent: navigator.userAgent,
+    // Mengambil cookie yang relevan
+    fbc: getCookie('_fbc'),
+    fbp: getCookie('_fbp'),
+    ttp: getCookie('_ttp'),
+    ...getQueryParams(),
+  };
+};
+
 // Fungsi utama untuk mengirim event tracking
 const trackEvent = async (eventName, eventData) => {
   try {
     console.log(`Mempersiapkan pengiriman event '${eventName}'...`);
     
-    // Langkah 3: Mengumpulkan semua data yang relevan
-    const clientInfo = {
-      clientId: getVisitorId(),
-      url: window.location.href,
-      referrer: document.referrer,
-      userAgent: navigator.userAgent,
-      fbc: getCookie('_fbc'),
-      fbp: getCookie('_fbp'),
-      ttp: getCookie('_ttp'),
-      ...getQueryParams(),
-    };
+    // Mengumpulkan semua data yang relevan
+    const clientInfo = getClientInfo();
 
     const payload = {
       eventName,
@@ -77,8 +79,8 @@ const trackEvent = async (eventName, eventData) => {
       clientInfo,
     };
 
-    // Langkah 4: Mengirim payload ke endpoint events-log
-    const response = await fetch('https://psstmdfdoantnlmicvcp.supabase.co/functions/v1/events-log', {
+    // Mengirim payload ke endpoint events-log
+    const response = await fetch('https://shoper-api-endpoint-vercel.vercel.app/functions/v1/events-log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -118,7 +120,6 @@ if (leadForm) {
   leadForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     setFormStatus(true);
-
     const formData = new FormData(leadForm);
     const payload = {
       nama: formData.get("nama")?.toString().trim() || "",
@@ -127,7 +128,6 @@ if (leadForm) {
     };
 
     try {
-      // Langkah 1 & 2: Kirim data formulir ke backend database
       const response = await fetch(
         "https://shoper-api-endpoint-vercel.vercel.app/api/collect-lead",
         {
@@ -141,10 +141,8 @@ if (leadForm) {
       setFormStatus(false);
 
       if (response.ok && result.success) {
-        // ✅ HANYA JIKA BERHASIL, panggil fungsi tracking
-        // Meneruskan payload yang sama ke fungsi tracking
+        // ✅ Panggil event 'Lead' dengan payload yang diperkaya
         await trackEvent('Lead', payload);
-
         showModal();
         leadForm.reset();
       } else {
@@ -162,7 +160,6 @@ if (leadForm) {
 function showModal() {
   if (!modalOverlay) return;
   modalOverlay.classList.add("show");
-  // Logika untuk menampilkan tombol 'X' dihapus dari sini
 }
 
 function closeModal() {
@@ -172,9 +169,6 @@ function closeModal() {
 }
 
 if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-
-// ✅ Tambahkan event listener baru untuk menampilkan tombol 'X'
-// Tombol 'X' hanya akan muncul saat user mengklik tombol "Install"
 if (installBtn && closeModalBtn) {
   installBtn.addEventListener("click", () => {
     setTimeout(() => closeModalBtn.classList.add("visible"), 500);
@@ -182,41 +176,39 @@ if (installBtn && closeModalBtn) {
 }
 
 // --- EVENT TRACKING UNTUK PAGEVIEW ---
-// Panggil fungsi trackEvent saat halaman selesai dimuat.
-// Event ini akan otomatis mengirim data pageview ke events-log.
 window.addEventListener('load', () => {
-    trackEvent('PageView', {
-        page_title: document.title,
-        page_location: window.location.href,
-        referrer: document.referrer,
-    });
+  // ✅ Panggil event 'PageView' saat halaman dimuat
+  trackEvent('PageView', {
+      page_title: document.title,
+      page_location: window.location.href,
+      referrer: document.referrer,
+  });
 });
 
-// --- EVENT TRACKING UNTUK VIEWCONTENT ---
+// --- EVENT TRACKING UNTUK VIEWCONTENT (ON SCROLL) ---
 let hasViewedContent = false;
-
 const handleScroll = () => {
   if (hasViewedContent) {
     window.removeEventListener('scroll', handleScroll);
     return;
   }
   
-  // Hitung persentase scroll
   const scrollPosition = window.scrollY;
   const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercentage = (scrollPosition / totalHeight) * 100;
   
   if (scrollPercentage >= 80) {
+    // ✅ Panggil event 'ViewContent' dengan payload
     trackEvent('ViewContent', {
       page_title: document.title,
       page_location: window.location.href,
     });
-    hasViewedContent = true; // Set flag agar event tidak terkirim lagi
+    hasViewedContent = true;
     console.log('✅ Event ViewContent berhasil dikirim setelah mencapai 80% scroll');
   }
 };
-
 window.addEventListener('scroll', handleScroll);
+
 
 
 
