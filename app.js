@@ -89,6 +89,7 @@ function showModal() {
   if (!modalOverlay) return;
   modalOverlay.classList.add("show");
   if (closeModalBtn) {
+    // Tombol 'X' akan muncul 0.5 detik setelah modal tampil
     setTimeout(() => closeModalBtn.classList.add("visible"), 500);
   }
 }
@@ -107,3 +108,4 @@ if (modalOverlay) {
     if (e.target === modalOverlay) closeModal();
   });
 }
+
