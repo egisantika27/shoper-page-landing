@@ -33,19 +33,29 @@ const errorMsg = document.getElementById("formErrorMsg");
 const modalOverlay = document.getElementById("successModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 
+// Fungsi baru untuk mengelola status UI formulir
+function setFormStatus(isLoading, errorMessage = null) {
+  if (loadingMsg) {
+    loadingMsg.style.display = isLoading ? "block" : "none";
+  }
+  if (errorMsg) {
+    errorMsg.textContent = errorMessage || "";
+    errorMsg.style.display = errorMessage ? "block" : "none";
+  }
+}
+
 if (leadForm) {
   leadForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // reset messages
-    if (loadingMsg) loadingMsg.style.display = "block";
-    if (errorMsg) errorMsg.style.display = "none";
+    // 1. Tampilkan status loading, sembunyikan error
+    setFormStatus(true);
 
     const formData = new FormData(leadForm);
     const payload = {
       nama: formData.get("nama")?.toString().trim() || "",
       email: formData.get("email")?.toString().trim() || "",
-      phone: formData.get("phone")?.toString().trim() || "", // ✅ pakai phone
+      phone: formData.get("phone")?.toString().trim() || "",
       source_page: window.location.href,
       user_agent: navigator.userAgent,
     };
@@ -61,24 +71,21 @@ if (leadForm) {
       );
 
       const result = await response.json();
-      if (loadingMsg) loadingMsg.style.display = "none";
+      
+      // 2. Setelah proses selesai, sembunyikan loading
+      setFormStatus(false);
 
       if (response.ok && result.success) {
         showModal();
         leadForm.reset();
       } else {
-        if (errorMsg) {
-          errorMsg.textContent = result.error || "Terjadi kesalahan server";
-          errorMsg.style.display = "block";
-        }
+        // 3. Tampilkan pesan error jika ada masalah
+        setFormStatus(false, result.error || "Terjadi kesalahan server");
         console.error("Server error:", result.error || "Unknown error");
       }
     } catch (err) {
-      if (loadingMsg) loadingMsg.style.display = "none";
-      if (errorMsg) {
-        errorMsg.textContent = "Gagal mengirim data. Silakan coba lagi.";
-        errorMsg.style.display = "block";
-      }
+      // 4. Tampilkan pesan error jika request gagal
+      setFormStatus(false, "Gagal mengirim data. Silakan coba lagi.");
       console.error("Request error:", err);
     }
   });
@@ -108,4 +115,5 @@ if (modalOverlay) {
     if (e.target === modalOverlay) closeModal();
   });
 }
+
 
