@@ -129,7 +129,7 @@ if (leadForm) {
 
     try {
       const response = await fetch(
-        "https://oper-api-endpoint-vercel.vercel.app/api/collect-lead",
+      "https://shoper-api-endpoint-vercel.vercel.app/api/collect-lead",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -205,6 +205,7 @@ const handleScroll = () => {
   }
 };
 window.addEventListener('scroll', handleScroll);
+
 
 
 
