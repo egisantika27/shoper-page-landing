@@ -181,6 +181,17 @@ if (installBtn && closeModalBtn) {
   });
 }
 
+// --- EVENT TRACKING UNTUK PAGEVIEW ---
+// Panggil fungsi trackEvent saat halaman selesai dimuat.
+// Event ini akan otomatis mengirim data pageview ke events-log.
+window.addEventListener('load', () => {
+    trackEvent('PageView', {
+        page_title: document.title,
+        page_location: window.location.href,
+        referrer: document.referrer,
+    });
+});
+
 
 
 
