@@ -43,9 +43,9 @@ if (leadForm) {
 
     const formData = new FormData(leadForm);
     const payload = {
-      nama: formData.get("nama"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
+      nama: formData.get("nama")?.toString().trim() || "",
+      email: formData.get("email")?.toString().trim() || "",
+      phone: formData.get("phone")?.toString().trim() || "", // ✅ pakai phone
       source_page: window.location.href,
       user_agent: navigator.userAgent,
     };
@@ -107,5 +107,3 @@ if (modalOverlay) {
     if (e.target === modalOverlay) closeModal();
   });
 }
-
-
