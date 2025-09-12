@@ -52,7 +52,7 @@ if (leadForm) {
 
     try {
       const response = await fetch(
-        "https://shoper-api-endpoint-vercel.vercel.app/api/leads",
+        "https://shoper-api-endpoint-vercel.vercel.app/api/collect-lead",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -107,3 +107,4 @@ if (modalOverlay) {
     if (e.target === modalOverlay) closeModal();
   });
 }
+
