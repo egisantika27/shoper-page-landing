@@ -192,6 +192,32 @@ window.addEventListener('load', () => {
     });
 });
 
+// --- EVENT TRACKING UNTUK VIEWCONTENT ---
+let hasViewedContent = false;
+
+const handleScroll = () => {
+  if (hasViewedContent) {
+    window.removeEventListener('scroll', handleScroll);
+    return;
+  }
+  
+  // Hitung persentase scroll
+  const scrollPosition = window.scrollY;
+  const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercentage = (scrollPosition / totalHeight) * 100;
+  
+  if (scrollPercentage >= 80) {
+    trackEvent('ViewContent', {
+      page_title: document.title,
+      page_location: window.location.href,
+    });
+    hasViewedContent = true; // Set flag agar event tidak terkirim lagi
+    console.log('✅ Event ViewContent berhasil dikirim setelah mencapai 80% scroll');
+  }
+};
+
+window.addEventListener('scroll', handleScroll);
+
 
 
 
