@@ -26,12 +26,14 @@ const observer = new IntersectionObserver(
 );
 fadeElems.forEach((el) => observer.observe(el));
 
+
 // --- FORM HANDLING ---
 const leadForm = document.getElementById("leadForm");
 const loadingMsg = document.getElementById("loadingMsg");
 const errorMsg = document.getElementById("formErrorMsg");
 const modalOverlay = document.getElementById("successModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
+const installBtn = document.querySelector(".install-button"); // ✅ PENTING: Tambahkan ini
 
 // Fungsi baru untuk mengelola status UI formulir
 function setFormStatus(isLoading, errorMessage = null) {
@@ -47,10 +49,7 @@ function setFormStatus(isLoading, errorMessage = null) {
 if (leadForm) {
   leadForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    // 1. Tampilkan status loading, sembunyikan error
     setFormStatus(true);
-
     const formData = new FormData(leadForm);
     const payload = {
       nama: formData.get("nama")?.toString().trim() || "",
@@ -71,20 +70,16 @@ if (leadForm) {
       );
 
       const result = await response.json();
-      
-      // 2. Setelah proses selesai, sembunyikan loading
       setFormStatus(false);
 
       if (response.ok && result.success) {
         showModal();
         leadForm.reset();
       } else {
-        // 3. Tampilkan pesan error jika ada masalah
         setFormStatus(false, result.error || "Terjadi kesalahan server");
         console.error("Server error:", result.error || "Unknown error");
       }
     } catch (err) {
-      // 4. Tampilkan pesan error jika request gagal
       setFormStatus(false, "Gagal mengirim data. Silakan coba lagi.");
       console.error("Request error:", err);
     }
@@ -95,10 +90,7 @@ if (leadForm) {
 function showModal() {
   if (!modalOverlay) return;
   modalOverlay.classList.add("show");
-  if (closeModalBtn) {
-    // Tombol 'X' akan muncul 0.5 detik setelah modal tampil
-    setTimeout(() => closeModalBtn.classList.add("visible"), 500);
-  }
+  // Logika untuk menampilkan tombol 'X' dihapus dari sini
 }
 
 function closeModal() {
@@ -109,10 +101,11 @@ function closeModal() {
 
 if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
 
-// Klik di luar modal untuk menutup
-if (modalOverlay) {
-  modalOverlay.addEventListener("click", (e) => {
-    if (e.target === modalOverlay) closeModal();
+// ✅ Tambahkan event listener baru untuk menampilkan tombol 'X'
+// Tombol 'X' hanya akan muncul saat user mengklik tombol "Install"
+if (installBtn && closeModalBtn) {
+  installBtn.addEventListener("click", () => {
+    setTimeout(() => closeModalBtn.classList.add("visible"), 500);
   });
 }
 
