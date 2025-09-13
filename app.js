@@ -74,10 +74,17 @@ const trackEvent = async (eventName, eventData) => {
     const clientInfo = getClientInfo();
 
     const payload = {
-      eventName,
-      eventData,
-      clientInfo,
-    };
+  eventName,
+  eventId: crypto.randomUUID(), // biar unik
+  eventData: {
+    value: eventData.value ?? 0,
+    currency: eventData.currency ?? "IDR",
+    contentType: eventData.contentType ?? "page",
+    contents: eventData.contents ?? null,
+    ...eventData,
+  },
+  clientInfo,
+};
 
     // Mengirim payload ke endpoint events-log
     const response = await fetch('https://psstmdfdoantnlmicvcp.supabase.co/functions/v1/events-log', {
@@ -205,6 +212,7 @@ const handleScroll = () => {
   }
 };
 window.addEventListener('scroll', handleScroll);
+
 
 
 
