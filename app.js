@@ -204,25 +204,20 @@ const handleScroll = () => {
   
   if (scrollPercentage >= 80) {
     trackEvent('ViewContent', {
-      value: 1,
-      currency: "IDR",
-      contentType: "product",
-      contents: [
-        {
-          id: "SKU12345", // universal id
-          quantity: 1,
-          price: 1
-        }
-      ],
-      customParams: { // untuk GA
-        page_title: document.title,
-        page_location: window.location.href,
-      },
-      customProperties: { // untuk TikTok
-        page_title: document.title,
-        page_location: window.location.href,
+      value: 1, // opsional, bisa diisi kalau ada harga
+    currency: "IDR",
+    contentType: "product", // WAJIB sesuai aturan
+    contents: [
+      {
+        id: "PAGEVIEW-DEFAULT",   // Meta → id
+        content_id: "PAGEVIEW-DEFAULT", // TikTok → content_id
+        quantity: 1,
+        price: 1
       }
-    });
+    ],
+    page_title: document.title,
+    page_location: window.location.href,
+  });
     hasViewedContent = true;
     console.log('✅ Event ViewContent berhasil dikirim setelah mencapai 80% scroll');
   }
