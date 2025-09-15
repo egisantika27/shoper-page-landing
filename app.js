@@ -77,7 +77,7 @@ const trackEvent = async (eventName, eventData) => {
   eventName,
   eventId: crypto.randomUUID(), // biar unik
   eventData: {
-    value: eventData.value ?? 0,
+    value: eventData.value ?? 1,
     currency: eventData.currency ?? "IDR",
     contentType: eventData.contentType ?? "page",
     contents: eventData.contents ?? null,
@@ -212,6 +212,7 @@ const handleScroll = () => {
   }
 };
 window.addEventListener('scroll', handleScroll);
+
 
 
 
