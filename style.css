@@ -194,7 +194,7 @@ section { padding: 3rem 0; }
     display: none;
     text-align: center;
     margin-top: 1rem;
-    color: var(--text-color);
+    color: #00ff1a ;
     font-size: 14px;
     font-style: italic;
     opacity: 0.8;
@@ -315,4 +315,5 @@ section { padding: 3rem 0; }
     #dark-mode-toggle { position: static; transform: none; margin-top: 1rem; }
     .container { padding: 1rem; }
     .form-section { padding: 2rem 1.5rem; }
+
 }
