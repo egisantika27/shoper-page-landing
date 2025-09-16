@@ -42,6 +42,7 @@ h2 { font-size: 2.2rem; }
 h3 { font-size: 1.5rem; }
 h4 { text-align: left;}
 p { 
+    font-size: 1.2rem;
     margin-bottom: .5rem;
     text-align: left; 
 }
@@ -145,7 +146,7 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
 /* --- General Components --- */
 .divider {
     height: 2px;
-    width: 100px;
+    width: 100%;
     background-color: var(--primary-color);
     margin: 3rem auto;
     border: none;
@@ -178,7 +179,6 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
 }
 
 /* --- Sections --- */
-section { padding: 3rem 0; }
 .hero-section { display: flex; align-items: center; gap: 3rem; margin-top: 90px; border-top: 1px solid var(--divider-color); }
 .hero-image, .hero-content { flex: 1; }
 .hero-image img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px var(--shadow-color); }
@@ -264,7 +264,7 @@ section { padding: 3rem 0; }
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(255, 255, 255, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -345,7 +345,7 @@ section { padding: 3rem 0; }
 .modal-content .install-button:active { transform: scale(0.98); }
 
 .modal {
-  display: none;
+  display: none; /* <-- Biarkan ini saja */
   position: fixed;
   z-index: 9999;
   left: 0;
@@ -354,8 +354,7 @@ section { padding: 3rem 0; }
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
 
-  /* ✅ Tambahan untuk center */
-  display: flex;
+  /* Properti ini akan aktif saat display diubah ke 'flex' oleh JS */
   justify-content: center;
   align-items: center;
 }

@@ -54,7 +54,7 @@ if (mainHeader) {
 if (modal && modalImage) {
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('gallery-image')) {
-            modal.style.display = "block";
+            modal.style.display = "flex"; // <-- GANTI MENJADI 'flex'
             modalImage.src = e.target.src;
         }
 
