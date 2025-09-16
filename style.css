@@ -40,29 +40,8 @@ h1, h2, h3 { color: var(--heading-color); margin-bottom: 1rem; font-weight: 700;
 h1 { font-size: 2.8rem; }
 h2 { font-size: 2.2rem; }
 h3 { font-size: 1.5rem; }
-h4 { text-align: left;}
-p { 
-    font-size: 1.2rem;
-    margin-bottom: .5rem;
-    text-align: left; 
-}
-span { 
-    font-weight: bold; 
-    color: var(--primary-color);
-}
-ul { 
-    text-align: left;
-    margin-left:3rem ;
-}
-
-#hero-con { padding-top: 50px;}
-
-.content { color: #000;}
-body.dark-mode .content { color: #fff;}
-
-.footer-text {
-    text-align: center;
-}
+p { margin-bottom: 1.5rem; }
+span { font-weight: bold; }
 
 /* --- Header & Logo --- */
 .main-header {
@@ -70,13 +49,7 @@ body.dark-mode .content { color: #fff;}
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    /* Tambahkan transisi untuk efek yang lebih halus */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 .header-logo {
     display: flex;
@@ -102,22 +75,6 @@ body.dark-mode .content { color: #fff;}
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
-}
-
-.main-header.scrolled {
-    background-color: var(--card-background); /* Ganti dengan warna putih atau warna kartu Anda */
-    box-shadow: 0 2px 5px var(--shadow-color);
-}
-
-/* --- image --- */
-.gallery-image {
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery-image:hover {
-    transform: scale(1.05); /* Memperbesar gambar */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Menambahkan efek terangkat */
 }
 
 /* --- Dark Mode Toggle --- */
@@ -147,7 +104,7 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
 /* --- General Components --- */
 .divider {
     height: 2px;
-    width: 100%;
+    width: 100px;
     background-color: var(--primary-color);
     margin: 3rem auto;
     border: none;
@@ -180,12 +137,19 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
 }
 
 /* --- Sections --- */
-.hero-section { display: flex; align-items: center; gap: 3rem; margin-top: 75px; border-top: 1px solid var(--divider-color); }
+section { padding: 3rem 0; }
+.hero-section { display: flex; align-items: center; gap: 3rem; }
 .hero-image, .hero-content { flex: 1; }
 .hero-image img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px var(--shadow-color); }
 .content-section { text-align: center; }
 .content-section h2 { margin-top: 2rem; }
 .content-image-full img { width: 100%; height: auto; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 10px 20px var(--shadow-color); }
+
+
+/* --- Span --- */
+span   {
+    color: var(--primary-color);
+}
 
 /* --- Form Section --- */
 .form-section {
@@ -227,9 +191,9 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     text-align: center;
     font-weight: 500;
     margin-top: 1rem;
+    color: var(--error-text); 
+    color: var(--success-text); 
 }
-.error-message { color: var(--error-text); }
-.success-message { color: var(--success-text); }
 
 /* [BARU] Gaya untuk pesan loading */
 .loading-message {
@@ -242,50 +206,26 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     opacity: 0.8;
 }
 
+
 /* --- [BARU] Modal Styles --- */
-/* Gaya untuk tombol tutup di modal gambar */
-.modal-close { 
-    position: absolute; 
-    top: 10px; 
-    right: 25px; 
-    color: #fff; 
-    font-size: 35px; 
-    font-weight: bold; 
-    transition: 0.3s; 
-    cursor: pointer; 
-} 
-
-.modal-close:hover, 
-.modal-close:focus { 
-    color: #bbb; 
-    text-decoration: none; 
-    cursor: pointer; 
-} 
-
-.modal-overlay { 
-    /* Pastikan properti ini ada dan sudah benar */
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0, 0, 0, 0.6); /* Warna latar belakang buram */ 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    z-index: 1000; /* Pastikan overlay berada di atas semua elemen lain */
-    opacity: 0; 
-    visibility: hidden; 
-    transition: opacity 0.3s ease, visibility 0.3s ease; 
-} 
-
-.modal-overlay.show { 
-    opacity: 1; 
-    visibility: visible; 
-} 
-
-/* Gaya untuk konten di dalam modal */
-#successModal {
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
     position: relative; 
     background: var(--card-background);
     padding: 40px;
@@ -297,32 +237,6 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     transition: transform 0.3s ease;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
-
-.modal-overlay.show .modal-content { 
-    transform: scale(1);
-} 
-
-/* Tambahan: Pastikan gaya untuk tombol 'X' benar */
-.close-modal {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    border: none;
-    font-size: 2rem;
-    line-height: 1;
-    color: var(--text-color);
-    cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s, color 0.2s;
-}
-
-.close-modal.visible {
-    opacity: 0.7;
-    visibility: visible;
-}
-
 /* [BARU] Gaya untuk tombol tutup (X) */
 .close-modal {
     position: absolute;
@@ -334,8 +248,7 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     line-height: 1;
     color: var(--text-color);
     cursor: pointer;
-    /* ✅ Sembunyikan secara default */
-    opacity: 0;
+    opacity: 0; /* Sembunyikan secara default */
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s, color 0.2s;
 }
@@ -344,11 +257,11 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     color: var(--primary-color);
 }
 
+/* [BARU] Kelas untuk menampilkan tombol tutup */
 .close-modal.visible {
     opacity: 0.7;
     visibility: visible;
 }
-
 .modal-overlay.show .modal-content {
     transform: scale(1);
 }
@@ -389,48 +302,6 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
 .modal-content .install-button:hover { filter: brightness(1.1); }
 .modal-content .install-button:active { transform: scale(0.98); }
 
-.modal {
-  display: none; /* <-- Biarkan ini saja */
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-
-  /* Properti ini akan aktif saat display diubah ke 'flex' oleh JS */
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  margin: auto;
-  display: block;
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;   /* ✅ jaga rasio gambar */
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-
-.close {
-  position: absolute;
-  top: 20px;
-  right: 35px;
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.close:hover {
-  color: #ff5555;
-}
-
-
 /* --- Video Section --- */
 .video-section { text-align: center; }
 .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 10px 20px var(--shadow-color); }
@@ -446,12 +317,8 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     h1 { font-size: 2.2rem; }
     h2 { font-size: 1.8rem; }
     .hero-section { flex-direction: column; text-align: center; }
-    .main-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    .main-header { flex-direction: column; }
+    #dark-mode-toggle { position: static; transform: none; margin-top: 1rem; }
     .container { padding: 1rem; }
     .form-section { padding: 2rem 1.5rem; }
-    
 }
