@@ -145,6 +145,12 @@ section { padding: 3rem 0; }
 .content-section h2 { margin-top: 2rem; }
 .content-image-full img { width: 100%; height: auto; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 10px 20px var(--shadow-color); }
 
+
+/* --- Span --- */
+span   {
+    color: var(--primary-color);
+}
+
 /* --- Form Section --- */
 .form-section {
     background-color: var(--card-background);
@@ -315,5 +321,4 @@ section { padding: 3rem 0; }
     #dark-mode-toggle { position: static; transform: none; margin-top: 1rem; }
     .container { padding: 1rem; }
     .form-section { padding: 2rem 1.5rem; }
-
 }
