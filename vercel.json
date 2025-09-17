@@ -6,7 +6,7 @@
     },
     {
       "source": "/payment-page/:path*",
-      "destination": "https://egi-santika.myr.id/pl/lisensi-lifetime-shoper-52870/:path*"
+      "destination": "https://egi-santika.myr.id/:path*"
     },
     {
       "source": "/thank-you-page/:path*",
@@ -19,6 +19,7 @@
   ]
 
 }
+
 
 
 
