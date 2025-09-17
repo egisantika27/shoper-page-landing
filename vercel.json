@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api-end-point/:path*",
-      "destination": "https://shoper-api-endpoint-vercel.vercel.app/:path*"
+      "source": "/beranda/:path*",
+      "destination": "https://shoper-beranda.vercel.app/:path*"
     },
     {
       "source": "/reset-page/:path*",
@@ -11,3 +11,4 @@
   ]
 
 }
+
