@@ -5,20 +5,13 @@
       "destination": "https://shoper-beranda.vercel.app/:path*"
     },
     {
-      "source": "/payment-page/:path*",
-      "destination": "https://egi-santika.myr.id/:path*"
-    },
-    {
-      "source": "/thank-you-page/:path*",
-      "destination": "https://egi-santika.myr.id/pl/lisensi-lifetime-shoper-52870/09890/:path*"
-    },
-    {
       "source": "/reset-page/:path*",
       "destination": "https://shoper-reset-page.vercel.app/:path*"
     }
   ]
 
 }
+
 
 
 
