@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api-end-point/(.*)",
+      "destination": "https://shoper-api-endpoint-vercel.vercel.app/$1"
+    }
+  ]
+}
