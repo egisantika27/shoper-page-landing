@@ -5,8 +5,8 @@
       "destination": "https://shoper-beranda.vercel.app/:path*"
     },
     {
-      "source": "/beranda/?ref=install/:path*",
-      "destination": "https://shoper-beranda.vercel.app/:path*"
+      "source": "/beranda/:path*",
+      "destination": "https://shoper-beranda.vercel.app/?ref=install/:path*"
     },
     {
       "source": "/reset-page/:path*",
@@ -15,6 +15,7 @@
   ]
 
 }
+
 
 
 
