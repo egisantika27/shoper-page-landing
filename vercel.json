@@ -3,6 +3,11 @@
     {
       "source": "/api-end-point/:path*",
       "destination": "https://shoper-api-endpoint-vercel.vercel.app/:path*"
+    },
+    {
+      "source": "/reset-page/:path*",
+      "destination": "https://shoper-reset-page.vercel.app/:path*"
     }
   ]
+
 }
