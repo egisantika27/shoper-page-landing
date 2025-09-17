@@ -295,8 +295,8 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     display: none;
     text-align: center;
     margin-top: 1rem;
-    color: #00ff1a;
-    font-size: 14px;
+    color: #37A345;
+    font-size: 20px;
     font-style: italic;
     opacity: 0.8;
 }
@@ -480,4 +480,5 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
         margin-bottom: 30px;
         margin-top: 30px;
     }
+
 }
