@@ -206,6 +206,7 @@ const trackEvent = async (eventName, eventData) => {
             },
             clientInfo,
         };
+		console.log("Payload yang dikirim dari frontend:", payload);
         const response = await fetch('https://psstmdfdoantnlmicvcp.supabase.co/functions/v1/events-log', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
