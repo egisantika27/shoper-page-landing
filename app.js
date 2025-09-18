@@ -261,26 +261,27 @@ if (leadForm) {
         }
         setFormStatus(true);
         const formData = new FormData(leadForm);
-        const payload = {
-            nama: formData.get("nama")?.toString().trim() || "",
-            email: formData.get("email")?.toString().trim() || "",
-            phone: formData.get("phone")?.toString().trim() || "",
-        };
-        try {
-            const response = await fetch(
-                "https://shoper-api-endpoint-vercel.vercel.app/api/collect-lead",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                }
-            );
-            const result = await response.json();
-            setFormStatus(false);
-            if (response.ok && result.success) {
-                await trackEvent('Lead', payload);
-                showModal();
-                leadForm.reset();
+    const eventData = {
+        nama: formData.get("nama")?.toString().trim() || "",
+        email: formData.get("email")?.toString().trim() || "",
+        phone: formData.get("phone")?.toString().trim() || "",
+    };
+    try {
+        const response = await fetch(
+            "https://shoper-api-endpoint-vercel.vercel.app/api/collect-lead",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(eventData), // Mengirim data ke API vercel
+            }
+        );
+        const result = await response.json();
+        setFormStatus(false);
+        if (response.ok && result.success) {
+            // Panggil trackEvent dengan eventData yang benar
+            await trackEvent('Lead', eventData); 
+            showModal();
+            leadForm.reset();
             } else {
                 const userMessage = result.error === 'Email sudah terdaftar' 
                     ? 'Email ini sudah terdaftar. Silakan gunakan email lain.'
@@ -349,4 +350,5 @@ const handleScroll = () => {
         console.log('✅ Event ViewContent berhasil dikirim setelah mencapai 80% scroll');
     }
 };
+
 window.addEventListener('scroll', handleScroll);
