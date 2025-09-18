@@ -291,6 +291,7 @@ if (leadForm) {
                 console.error("Server error:", result.error || "Unknown error");
             }
         } catch (err) {
+			console.error("Request error to Vercel API:", err);
             setFormStatus(false, "Gagal mengirim data. Silakan periksa koneksi internet Anda.");
             console.error("Request error:", err);
         }
