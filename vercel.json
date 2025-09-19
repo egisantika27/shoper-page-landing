@@ -6,11 +6,12 @@
       "destination": "https://shoper-beranda.vercel.app/:path*"
     },
     {
-      "source": "/reset",
+      "source": "/reset-page",
       "destination": "/update-password.html"
     }
   ]
 }
+
 
 
 
