@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Kata Sandi | SHOPER</title>
+    <!-- Menghubungkan Google Fonts (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Menghubungkan ke file CSS eksternal -->
+    <link rel="stylesheet" href="https://shoper.id/reset-page/reset-page-style.css">
+    
+	<!-- Favicon multi-ukuran -->
+    <link rel="icon" type="image/png" sizes="16x16" href="https://shoper.id/assets/icon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://shoper.id/assets/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="https://shoper.id/assets/icon/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="https://shoper.id/assets/icon/favicon-64x64.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://shoper.id/assets/icon/favicon-96x96.png">
+</head>
+<body>
+
+    <main class="container">
+        <div class="header-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="logo-icon">
+                <path d="M3 3v18h18"/><path d="M7 12v5h12V8l-5 5-4-4Z"/>
+            </svg>
+            <h1>SHOPER</h1>
+        </div>
+        <h2>Buat Kata Sandi Baru</h2>
+        <form id="update-password-form">
+            <div class="form-group">
+                <label for="password">Kata Sandi Baru (PIN 6 Angka)</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Konfirmasi Kata Sandi Baru</label>
+                <input type="password" id="confirm-password" required>
+            </div>
+            <button type="submit">Update Kata Sandi</button>
+        </form>
+        <div id="message" class="message"></div>
+    </main>
+
+    <!-- Memuat Supabase dan skrip aplikasi -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://shoper.id/reset-page/reset-page-script.js"></script>
+</body>
+</html>
