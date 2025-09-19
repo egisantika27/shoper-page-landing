@@ -1,13 +1,17 @@
 {
   "cleanUrls": true,
   "rewrites": [
-
+    {
+      "source": "/beranda/:path*",
+      "destination": "https://shoper-beranda.vercel.app/:path*"
+    },
     {
       "source": "/reset",
       "destination": "/update-password.html"
     }
   ]
 }
+
 
 
 
