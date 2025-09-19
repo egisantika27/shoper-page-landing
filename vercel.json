@@ -6,11 +6,12 @@
     },
     {
       "source": "/reset-page/:path*",
-      "destination": "https://shoper-reset-page.vercel.app/:path*"
+      "destination": "/reset-page/:path*"
     }
   ]
 
 }
+
 
 
 
