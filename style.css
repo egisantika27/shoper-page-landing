@@ -464,7 +464,7 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
     h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
     .hero-section { flex-direction: column; text-align: center; }
     .main-header {
         display: flex;
@@ -482,3 +482,4 @@ body.dark-mode #dark-mode-toggle .sun { display: none; }
     }
 
 }
+
